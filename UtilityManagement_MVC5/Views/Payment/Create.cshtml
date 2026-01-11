@@ -1,0 +1,60 @@
+﻿@model UtilityManagement_MVC5.Models.PaymentViewModel
+@{ ViewBag.Title = "Cashier Portal"; }
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">💳 Cashier Payment Portal</h3>
+                </div>
+                <div class="card-body p-4">
+
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success">@ViewBag.Message</div>
+                    }
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+
+                    <form method="post" action="@Url.Action("Create", "Payment")">
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Bill ID</label>
+                            <input type="text" name="BillID" class="form-control"
+                                   value="@(Model != null && Model.BillID > 0 ? Model.BillID.ToString() : "")"
+                                   placeholder="e.g. 1" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Amount to Pay</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rs.</span>
+                                <input type="text" name="AmountPaid" class="form-control" placeholder="0.00" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="fw-bold">Payment Method</label>
+                            <select name="PaymentMethod" class="form-control">
+                                <option value="Cash">Cash</option>
+                                <option value="Card">Card</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100 py-2">Process Payment</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="@Url.Action("Index", "Home")" class="text-muted">Cancel</a>
+            </div>
+
+        </div>
+    </div>
+</div>

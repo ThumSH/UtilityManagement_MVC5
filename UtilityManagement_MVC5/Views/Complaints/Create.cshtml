@@ -1,0 +1,59 @@
+﻿@model UtilityManagement_MVC5.Models.Complaint
+
+@{
+    ViewBag.Title = "Log Complaint";
+}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <div class="card shadow border-0">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">⚠️ Log New Complaint</h3>
+        </div>
+        <div class="card-body bg-white p-4">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Customer</label>
+                        @Html.DropDownList("CustomerID", null, htmlAttributes: new { @class = "form-control form-select" })
+                        @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Category</label>
+                        <select name="Category" class="form-control form-select">
+                            <option value="Billing">Billing Issue</option>
+                            <option value="Meter Fault">Meter Fault</option>
+                            <option value="Service Outage">Service Outage</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold">Description</label>
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "4", @placeholder = "Describe the issue..." })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+
+                    <input type="hidden" name="Status" value="Open" />
+                    <input type="hidden" name="CreatedDate" value="@DateTime.Now" />
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger btn-lg">Submit Ticket</button>
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

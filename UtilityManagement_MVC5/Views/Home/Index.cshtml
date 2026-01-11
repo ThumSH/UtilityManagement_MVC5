@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    // Get session data safely
+    var userRole = Session["UserRole"] as string;
+    var userName = Session["UserName"] as string;
+}
+
+<link href="@Url.Content("~/Content/dashboard.css")" rel="stylesheet" />
+
+<div class="container">
+
+    @if (string.IsNullOrEmpty(userRole))
+    {
+        <div class="hero-section">
+            <h1 class="hero-title">Utility Management System</h1>
+            <p class="hero-subtitle">Select your role to access the portal.</p>
+        </div>
+
+        <div class="menu-grid">
+            <a href="@Url.Action("Login", "Account")" class="menu-card role-admin" style="border-bottom: 5px solid #0061f2;">
+                <div class="card-icon">🛡️</div>
+                <div class="card-title">Administrative Staff</div>
+                <div class="card-desc">Enter/update customer info, register connections, manage tariffs, and handle complaints.</div>
+            </a>
+
+            <a href="@Url.Action("Login", "Account")" class="menu-card role-officer" style="border-bottom: 5px solid #ff9f1c;">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">Field Officer</div>
+                <div class="card-desc">Enter monthly/periodic meter readings for electricity, water, and gas connections.</div>
+            </a>
+
+            <a href="@Url.Action("Login", "Account")" class="menu-card role-cashier" style="border-bottom: 5px solid #2ec4b6;">
+                <div class="card-icon">💳</div>
+                <div class="card-title">Cashier</div>
+                <div class="card-desc">Issue bills, record customer payments (cash/card), and update outstanding balances.</div>
+            </a>
+
+            <a href="@Url.Action("Login", "Account")" class="menu-card role-manager" style="border-bottom: 5px solid #6d597a;">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Manager</div>
+                <div class="card-desc">Generate and analyze reports (revenue trends, defaulters, usage) for strategic planning.</div>
+            </a>
+        </div>
+    }
+
+    else
+    {
+        <div class="hero-section" style="padding: 40px 20px; margin-bottom: 40px;">
+            <h2 class="fw-bold">Welcome, @userName</h2>
+            <div class="mt-2">
+                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm" style="font-size: 1rem;">
+                    Role: <strong>@userRole</strong>
+                </span>
+            </div>
+        </div>
+
+        <div class="menu-grid">
+
+            @if (userRole == "Admin")
+            {
+                <a href="@Url.Action("Index", "Customers")" class="menu-card role-admin" style="border-bottom: 5px solid #0061f2;">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">Customer Portal</div>
+                    <div class="card-desc">Add, Edit, Delete customer records.</div>
+                </a>
+
+                <a href="@Url.Action("Index", "Complaints")" class="menu-card role-admin" style="border-bottom: 5px solid #dc3545;">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-title">Handle Complaints</div>
+                    <div class="card-desc">Track and resolve service issues.</div>
+                </a>
+
+                <a href="@Url.Action("Index", "Reports")" class="menu-card role-manager" style="border-bottom: 5px solid #6d597a;">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Reports</div>
+                    <div class="card-desc">View financial analytics.</div>
+                </a>
+            }
+
+            @if (userRole == "FieldOfficer" || userRole == "Admin")
+            {
+                <a href="@Url.Action("Create", "Readings")" class="menu-card role-officer" style="border-bottom: 5px solid #ff9f1c;">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">Enter Readings</div>
+                    <div class="card-desc">Submit new meter data to generate bills.</div>
+                </a>
+            }
+
+            @if (userRole == "Cashier" || userRole == "Admin")
+            {
+                <a href="@Url.Action("Create", "Payment")" class="menu-card role-cashier" style="border-bottom: 5px solid #2ec4b6;">
+                    <div class="card-icon">💳</div>
+                    <div class="card-title">Process Payment</div>
+                    <div class="card-desc">Clear bills via Cash, Card, or Online.</div>
+                </a>
+            }
+
+            @if (userRole == "Manager")
+            {
+                <a href="@Url.Action("Index", "Reports")" class="menu-card role-manager" style="border-bottom: 5px solid #28a745;">
+                    <div class="card-icon">💰</div>
+                    <div class="card-title">Revenue Trends</div>
+                    <div class="card-desc">Daily & Monthly collections.</div>
+                </a>
+
+                <a href="@Url.Action("Defaulters", "Reports")" class="menu-card role-manager" style="border-bottom: 5px solid #dc3545;">
+                    <div class="card-icon">📉</div>
+                    <div class="card-title">Unpaid Bills</div>
+                    <div class="card-desc">Track outstanding debts.</div>
+                </a>
+
+                <a href="@Url.Action("TopConsumers", "Reports")" class="menu-card role-manager" style="border-bottom: 5px solid #007bff;">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-title">Top Consumers</div>
+                    <div class="card-desc">Identify high-usage customers.</div>
+                </a>
+            }
+
+        </div>
+    }
+</div>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f478566c73a44fcd8d513622d9e401a7" Name="Diagram1">
+        <EntityTypeShape EntityType="UMS_DBModel.Bill" Width="1.5" PointX="10.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Complaint" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Customer" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Meter" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Payment" Width="1.5" PointX="12.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Premis" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Reading" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.Tariff" Width="1.5" PointX="6" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.TariffSlab" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.User" Width="1.5" PointX="2.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.UtilityType" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.v_MonthlyRevenue" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.v_TopConsumers" Width="1.5" PointX="2.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UMS_DBModel.v_UnpaidBillsReport" Width="1.5" PointX="4.75" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="UMS_DBModel.FK__Bills__ReadingID__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__Payments__BillID__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__Complaint__Custo__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__Meters__Customer__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__Meters__UtilityI__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__Readings__MeterI__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__Tariffs__Utility__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="UMS_DBModel.FK__TariffSla__Tarif__4222D4EF" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

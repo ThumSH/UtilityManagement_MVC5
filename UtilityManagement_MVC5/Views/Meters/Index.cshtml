@@ -1,0 +1,51 @@
+﻿@model IEnumerable<UtilityManagement_MVC5.Models.Meter>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MeterSerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InstallationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UtilityType.TypeName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MeterSerialNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InstallationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UtilityType.TypeName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MeterID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MeterID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MeterID })
+        </td>
+    </tr>
+}
+
+</table>

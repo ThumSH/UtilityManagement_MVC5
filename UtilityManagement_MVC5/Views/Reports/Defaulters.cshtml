@@ -1,0 +1,38 @@
+﻿@model List<UtilityManagement_MVC5.Models.DefaulterViewModel>
+@{ ViewBag.Title = "Defaulter Analysis"; }
+
+<div class="container mt-5">
+    <h2 class="text-danger fw-bold">📉 Defaulter Analysis</h2>
+    <p class="text-muted">List of customers with outstanding payments.</p>
+
+    <div class="card shadow-sm border-0 mt-4">
+        <table class="table table-hover mb-0">
+            <thead class="bg-danger text-white">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Utility</th>
+                    <th>Due Date</th>
+                    <th>Overdue (Days)</th>
+                    <th>Amount Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.FullName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.UtilityType</td>
+                        <td>@item.DueDate.ToShortDateString()</td>
+                        <td class="text-danger fw-bold">@item.DaysOverdue</td>
+                        <td class="fw-bold">Rs. @item.TotalAmount.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-3">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Back to Dashboard</a>
+    </div>
+</div>

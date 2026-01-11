@@ -1,0 +1,50 @@
+﻿@model UtilityManagement_MVC5.Models.Meter
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Meter</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MeterSerialNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MeterSerialNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InstallationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InstallationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UtilityType.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UtilityType.TypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MeterID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

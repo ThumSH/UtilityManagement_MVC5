@@ -1,0 +1,138 @@
+﻿/* MODERN DASHBOARD THEME (Glassmorphism & Gradients) */
+
+/* 1. Global Background */
+body {
+    background-color: #f4f6f9; /* Light grey-blue for modern look */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* 2. Hero Section (Top Banner) */
+.hero-section {
+    background: linear-gradient(135deg, #0061f2 0%, #00ba88 100%);
+    color: white;
+    padding: 60px 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 15px 35px rgba(0, 97, 242, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Abstract shapes in background */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -20%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+        transform: rotate(30deg);
+        pointer-events: none;
+    }
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    position: relative;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 400;
+    position: relative;
+}
+
+/* 3. Grid Layout */
+.menu-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 20px;
+    margin-bottom: 50px;
+}
+
+/* 4. Modern Cards */
+.menu-card {
+    background: white;
+    border-radius: 15px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 280px; /* Responsive width */
+    max-width: 320px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Hover Animation: Lift & Shadow */
+    .menu-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        text-decoration: none; /* Keep text clean */
+        color: #333;
+    }
+
+/* Card Content */
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover .card-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.card-desc {
+    color: #6c757d;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* 5. Role Specific Colors (Used for border bottoms or accents) */
+.role-admin {
+    border-bottom: 5px solid #0061f2;
+}
+
+.role-officer {
+    border-bottom: 5px solid #ff9f1c;
+}
+
+.role-cashier {
+    border-bottom: 5px solid #2ec4b6;
+}
+
+.role-manager {
+    border-bottom: 5px solid #6d597a;
+}
+
+/* 6. Utility Helper Classes */
+.btn-rounded {
+    border-radius: 50px;
+}
+
+.shadow-soft {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}

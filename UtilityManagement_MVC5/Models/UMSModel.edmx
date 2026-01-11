@@ -1,0 +1,851 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UMS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bills">
+          <Key>
+            <PropertyRef Name="BillID" />
+          </Key>
+          <Property Name="BillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReadingID" Type="int" />
+          <Property Name="BillDate" Type="datetime" />
+          <Property Name="UnitsConsumed" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DueDate" Type="date" Nullable="false" />
+          <Property Name="IsPaid" Type="bit" />
+        </EntityType>
+        <EntityType Name="Complaints">
+          <Key>
+            <PropertyRef Name="ComplaintID" />
+          </Key>
+          <Property Name="ComplaintID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ResolvedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="AddressLine" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RegisteredDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Meters">
+          <Key>
+            <PropertyRef Name="MeterID" />
+          </Key>
+          <Property Name="MeterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="UtilityID" Type="int" />
+          <Property Name="MeterSerialNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InstallationDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BillID" Type="int" />
+          <Property Name="PaymentDate" Type="datetime" />
+          <Property Name="AmountPaid" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Premises">
+          <Key>
+            <PropertyRef Name="PremisesID" />
+          </Key>
+          <Property Name="PremisesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Readings">
+          <Key>
+            <PropertyRef Name="ReadingID" />
+          </Key>
+          <Property Name="ReadingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeterID" Type="int" />
+          <Property Name="ReadingDate" Type="date" Nullable="false" />
+          <Property Name="PreviousReading" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CurrentReading" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tariffs">
+          <Key>
+            <PropertyRef Name="TariffID" />
+          </Key>
+          <Property Name="TariffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UtilityID" Type="int" />
+          <Property Name="TariffName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitRate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FixedCharge" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="TariffSlabs">
+          <Key>
+            <PropertyRef Name="SlabID" />
+          </Key>
+          <Property Name="SlabID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TariffID" Type="int" />
+          <Property Name="FromUnit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ToUnit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="RatePerUnit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="20" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UtilityTypes">
+          <Key>
+            <PropertyRef Name="UtilityID" />
+          </Key>
+          <Property Name="UtilityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_DB.dbo.v_MonthlyRevenue' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_MonthlyRevenue">
+          <Key>
+            <PropertyRef Name="UtilityType" />
+          </Key>
+          <Property Name="UtilityType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BillYear" Type="int" />
+          <Property Name="BillMonth" Type="int" />
+          <Property Name="TotalRevenue" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="TotalBillsGenerated" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_DB.dbo.v_TopConsumers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_TopConsumers">
+          <Key>
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="Utility" />
+          </Key>
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Utility" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalUsage" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="TotalSpent" Type="decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UMS_DB.dbo.v_UnpaidBillsReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_UnpaidBillsReport">
+          <Key>
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="Utility" />
+            <PropertyRef Name="TotalAmount" />
+            <PropertyRef Name="DueDate" />
+          </Key>
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="Utility" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BillDate" Type="datetime" />
+          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DueDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Bills__ReadingID__534D60F1">
+          <End Role="Readings" Type="Self.Readings" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Readings">
+              <PropertyRef Name="ReadingID" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="ReadingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Complaint__Custo__5CD6CB2B">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Complaints">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meters__Customer__4BAC3F29">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Meters" Type="Self.Meters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Meters">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meters__UtilityI__4CA06362">
+          <End Role="UtilityTypes" Type="Self.UtilityTypes" Multiplicity="0..1" />
+          <End Role="Meters" Type="Self.Meters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UtilityTypes">
+              <PropertyRef Name="UtilityID" />
+            </Principal>
+            <Dependent Role="Meters">
+              <PropertyRef Name="UtilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__BillID__5812160E">
+          <End Role="Bills" Type="Self.Bills" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bills">
+              <PropertyRef Name="BillID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="BillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Readings__MeterI__4F7CD00D">
+          <End Role="Meters" Type="Self.Meters" Multiplicity="0..1" />
+          <End Role="Readings" Type="Self.Readings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meters">
+              <PropertyRef Name="MeterID" />
+            </Principal>
+            <Dependent Role="Readings">
+              <PropertyRef Name="MeterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tariffs__Utility__3E52440B">
+          <End Role="UtilityTypes" Type="Self.UtilityTypes" Multiplicity="0..1" />
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UtilityTypes">
+              <PropertyRef Name="UtilityID" />
+            </Principal>
+            <Dependent Role="Tariffs">
+              <PropertyRef Name="UtilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TariffSla__Tarif__4222D4EF">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="0..1" />
+          <End Role="TariffSlabs" Type="Self.TariffSlabs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="TariffID" />
+            </Principal>
+            <Dependent Role="TariffSlabs">
+              <PropertyRef Name="TariffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_CalculateLateFee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="BillID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_GetTotalDebt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegisterNewCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FullName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_SubmitReadingAndGenerateBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MeterID" Type="int" Mode="In" />
+          <Parameter Name="CurrentReading" Type="decimal" Mode="In" />
+          <Parameter Name="ReadingDate" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="UMS_DBModelStoreContainer">
+          <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Complaints" EntityType="Self.Complaints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meters" EntityType="Self.Meters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Premises" EntityType="Self.Premises" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Readings" EntityType="Self.Readings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tariffs" EntityType="Self.Tariffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TariffSlabs" EntityType="Self.TariffSlabs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UtilityTypes" EntityType="Self.UtilityTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_MonthlyRevenue" EntityType="Self.v_MonthlyRevenue" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_MonthlyRevenue].[UtilityType] AS [UtilityType], 
+    [v_MonthlyRevenue].[BillYear] AS [BillYear], 
+    [v_MonthlyRevenue].[BillMonth] AS [BillMonth], 
+    [v_MonthlyRevenue].[TotalRevenue] AS [TotalRevenue], 
+    [v_MonthlyRevenue].[TotalBillsGenerated] AS [TotalBillsGenerated]
+    FROM [dbo].[v_MonthlyRevenue] AS [v_MonthlyRevenue]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_TopConsumers" EntityType="Self.v_TopConsumers" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_TopConsumers].[FullName] AS [FullName], 
+    [v_TopConsumers].[Utility] AS [Utility], 
+    [v_TopConsumers].[TotalUsage] AS [TotalUsage], 
+    [v_TopConsumers].[TotalSpent] AS [TotalSpent]
+    FROM [dbo].[v_TopConsumers] AS [v_TopConsumers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_UnpaidBillsReport" EntityType="Self.v_UnpaidBillsReport" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_UnpaidBillsReport].[FullName] AS [FullName], 
+    [v_UnpaidBillsReport].[PhoneNumber] AS [PhoneNumber], 
+    [v_UnpaidBillsReport].[Utility] AS [Utility], 
+    [v_UnpaidBillsReport].[BillDate] AS [BillDate], 
+    [v_UnpaidBillsReport].[TotalAmount] AS [TotalAmount], 
+    [v_UnpaidBillsReport].[DueDate] AS [DueDate]
+    FROM [dbo].[v_UnpaidBillsReport] AS [v_UnpaidBillsReport]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Bills__ReadingID__534D60F1" Association="Self.FK__Bills__ReadingID__534D60F1">
+            <End Role="Readings" EntitySet="Readings" />
+            <End Role="Bills" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Complaint__Custo__5CD6CB2B" Association="Self.FK__Complaint__Custo__5CD6CB2B">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Complaints" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meters__Customer__4BAC3F29" Association="Self.FK__Meters__Customer__4BAC3F29">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Meters" EntitySet="Meters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meters__UtilityI__4CA06362" Association="Self.FK__Meters__UtilityI__4CA06362">
+            <End Role="UtilityTypes" EntitySet="UtilityTypes" />
+            <End Role="Meters" EntitySet="Meters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__BillID__5812160E" Association="Self.FK__Payments__BillID__5812160E">
+            <End Role="Bills" EntitySet="Bills" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Readings__MeterI__4F7CD00D" Association="Self.FK__Readings__MeterI__4F7CD00D">
+            <End Role="Meters" EntitySet="Meters" />
+            <End Role="Readings" EntitySet="Readings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tariffs__Utility__3E52440B" Association="Self.FK__Tariffs__Utility__3E52440B">
+            <End Role="UtilityTypes" EntitySet="UtilityTypes" />
+            <End Role="Tariffs" EntitySet="Tariffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TariffSla__Tarif__4222D4EF" Association="Self.FK__TariffSla__Tarif__4222D4EF">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="TariffSlabs" EntitySet="TariffSlabs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UMS_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillID" />
+          </Key>
+          <Property Name="BillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReadingID" Type="Int32" />
+          <Property Name="BillDate" Type="DateTime" Precision="3" />
+          <Property Name="UnitsConsumed" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsPaid" Type="Boolean" />
+          <NavigationProperty Name="Reading" Relationship="Self.FK__Bills__ReadingID__534D60F1" FromRole="Bills" ToRole="Readings" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__BillID__5812160E" FromRole="Bills" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="ComplaintID" />
+          </Key>
+          <Property Name="ComplaintID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ResolvedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Complaint__Custo__5CD6CB2B" FromRole="Complaints" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegisteredDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__Custo__5CD6CB2B" FromRole="Customers" ToRole="Complaints" />
+          <NavigationProperty Name="Meters" Relationship="Self.FK__Meters__Customer__4BAC3F29" FromRole="Customers" ToRole="Meters" />
+        </EntityType>
+        <EntityType Name="Meter">
+          <Key>
+            <PropertyRef Name="MeterID" />
+          </Key>
+          <Property Name="MeterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="UtilityID" Type="Int32" />
+          <Property Name="MeterSerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InstallationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Meters__Customer__4BAC3F29" FromRole="Meters" ToRole="Customers" />
+          <NavigationProperty Name="UtilityType" Relationship="Self.FK__Meters__UtilityI__4CA06362" FromRole="Meters" ToRole="UtilityTypes" />
+          <NavigationProperty Name="Readings" Relationship="Self.FK__Readings__MeterI__4F7CD00D" FromRole="Meters" ToRole="Readings" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BillID" Type="Int32" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="AmountPaid" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK__Payments__BillID__5812160E" FromRole="Payments" ToRole="Bills" />
+        </EntityType>
+        <EntityType Name="Premis">
+          <Key>
+            <PropertyRef Name="PremisesID" />
+          </Key>
+          <Property Name="PremisesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressLine1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reading">
+          <Key>
+            <PropertyRef Name="ReadingID" />
+          </Key>
+          <Property Name="ReadingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeterID" Type="Int32" />
+          <Property Name="ReadingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PreviousReading" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CurrentReading" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bills__ReadingID__534D60F1" FromRole="Readings" ToRole="Bills" />
+          <NavigationProperty Name="Meter" Relationship="Self.FK__Readings__MeterI__4F7CD00D" FromRole="Readings" ToRole="Meters" />
+        </EntityType>
+        <EntityType Name="Tariff">
+          <Key>
+            <PropertyRef Name="TariffID" />
+          </Key>
+          <Property Name="TariffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UtilityID" Type="Int32" />
+          <Property Name="TariffName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitRate" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FixedCharge" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="UtilityType" Relationship="Self.FK__Tariffs__Utility__3E52440B" FromRole="Tariffs" ToRole="UtilityTypes" />
+          <NavigationProperty Name="TariffSlabs" Relationship="Self.FK__TariffSla__Tarif__4222D4EF" FromRole="Tariffs" ToRole="TariffSlabs" />
+        </EntityType>
+        <EntityType Name="TariffSlab">
+          <Key>
+            <PropertyRef Name="SlabID" />
+          </Key>
+          <Property Name="SlabID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TariffID" Type="Int32" />
+          <Property Name="FromUnit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ToUnit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="RatePerUnit" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Tariff" Relationship="Self.FK__TariffSla__Tarif__4222D4EF" FromRole="TariffSlabs" ToRole="Tariffs" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UtilityType">
+          <Key>
+            <PropertyRef Name="UtilityID" />
+          </Key>
+          <Property Name="UtilityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Meters" Relationship="Self.FK__Meters__UtilityI__4CA06362" FromRole="UtilityTypes" ToRole="Meters" />
+          <NavigationProperty Name="Tariffs" Relationship="Self.FK__Tariffs__Utility__3E52440B" FromRole="UtilityTypes" ToRole="Tariffs" />
+        </EntityType>
+        <EntityType Name="v_MonthlyRevenue">
+          <Key>
+            <PropertyRef Name="UtilityType" />
+          </Key>
+          <Property Name="UtilityType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BillYear" Type="Int32" />
+          <Property Name="BillMonth" Type="Int32" />
+          <Property Name="TotalRevenue" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="TotalBillsGenerated" Type="Int32" />
+        </EntityType>
+        <EntityType Name="v_TopConsumers">
+          <Key>
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="Utility" />
+          </Key>
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Utility" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalUsage" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="TotalSpent" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="v_UnpaidBillsReport">
+          <Key>
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="Utility" />
+            <PropertyRef Name="TotalAmount" />
+            <PropertyRef Name="DueDate" />
+          </Key>
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Utility" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BillDate" Type="DateTime" Precision="3" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK__Bills__ReadingID__534D60F1">
+          <End Role="Readings" Type="Self.Reading" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Readings">
+              <PropertyRef Name="ReadingID" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="ReadingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__BillID__5812160E">
+          <End Role="Bills" Type="Self.Bill" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bills">
+              <PropertyRef Name="BillID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="BillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Complaint__Custo__5CD6CB2B">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Complaints" Type="Self.Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Complaints">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meters__Customer__4BAC3F29">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Meters" Type="Self.Meter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Meters">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meters__UtilityI__4CA06362">
+          <End Role="UtilityTypes" Type="Self.UtilityType" Multiplicity="0..1" />
+          <End Role="Meters" Type="Self.Meter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UtilityTypes">
+              <PropertyRef Name="UtilityID" />
+            </Principal>
+            <Dependent Role="Meters">
+              <PropertyRef Name="UtilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Readings__MeterI__4F7CD00D">
+          <End Role="Meters" Type="Self.Meter" Multiplicity="0..1" />
+          <End Role="Readings" Type="Self.Reading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meters">
+              <PropertyRef Name="MeterID" />
+            </Principal>
+            <Dependent Role="Readings">
+              <PropertyRef Name="MeterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tariffs__Utility__3E52440B">
+          <End Role="UtilityTypes" Type="Self.UtilityType" Multiplicity="0..1" />
+          <End Role="Tariffs" Type="Self.Tariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UtilityTypes">
+              <PropertyRef Name="UtilityID" />
+            </Principal>
+            <Dependent Role="Tariffs">
+              <PropertyRef Name="UtilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TariffSla__Tarif__4222D4EF">
+          <End Role="Tariffs" Type="Self.Tariff" Multiplicity="0..1" />
+          <End Role="TariffSlabs" Type="Self.TariffSlab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="TariffID" />
+            </Principal>
+            <Dependent Role="TariffSlabs">
+              <PropertyRef Name="TariffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UMS_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Complaints" EntityType="Self.Complaint" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Meters" EntityType="Self.Meter" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Premises" EntityType="Self.Premis" />
+          <EntitySet Name="Readings" EntityType="Self.Reading" />
+          <EntitySet Name="Tariffs" EntityType="Self.Tariff" />
+          <EntitySet Name="TariffSlabs" EntityType="Self.TariffSlab" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UtilityTypes" EntityType="Self.UtilityType" />
+          <EntitySet Name="v_MonthlyRevenue" EntityType="Self.v_MonthlyRevenue" />
+          <EntitySet Name="v_TopConsumers" EntityType="Self.v_TopConsumers" />
+          <EntitySet Name="v_UnpaidBillsReport" EntityType="Self.v_UnpaidBillsReport" />
+          <AssociationSet Name="FK__Bills__ReadingID__534D60F1" Association="Self.FK__Bills__ReadingID__534D60F1">
+            <End Role="Readings" EntitySet="Readings" />
+            <End Role="Bills" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__BillID__5812160E" Association="Self.FK__Payments__BillID__5812160E">
+            <End Role="Bills" EntitySet="Bills" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Complaint__Custo__5CD6CB2B" Association="Self.FK__Complaint__Custo__5CD6CB2B">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Complaints" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meters__Customer__4BAC3F29" Association="Self.FK__Meters__Customer__4BAC3F29">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Meters" EntitySet="Meters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meters__UtilityI__4CA06362" Association="Self.FK__Meters__UtilityI__4CA06362">
+            <End Role="UtilityTypes" EntitySet="UtilityTypes" />
+            <End Role="Meters" EntitySet="Meters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Readings__MeterI__4F7CD00D" Association="Self.FK__Readings__MeterI__4F7CD00D">
+            <End Role="Meters" EntitySet="Meters" />
+            <End Role="Readings" EntitySet="Readings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tariffs__Utility__3E52440B" Association="Self.FK__Tariffs__Utility__3E52440B">
+            <End Role="UtilityTypes" EntitySet="UtilityTypes" />
+            <End Role="Tariffs" EntitySet="Tariffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TariffSla__Tarif__4222D4EF" Association="Self.FK__TariffSla__Tarif__4222D4EF">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="TariffSlabs" EntitySet="TariffSlabs" />
+          </AssociationSet>
+          <FunctionImport Name="sp_RegisterNewCustomer">
+            <Parameter Name="FullName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SubmitReadingAndGenerateBill">
+            <Parameter Name="MeterID" Mode="In" Type="Int32" />
+            <Parameter Name="CurrentReading" Mode="In" Type="Decimal" />
+            <Parameter Name="ReadingDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UMS_DBModelStoreContainer" CdmEntityContainer="UMS_DBEntities">
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="UMS_DBModel.Bill">
+              <MappingFragment StoreEntitySet="Bills">
+                <ScalarProperty Name="BillID" ColumnName="BillID" />
+                <ScalarProperty Name="ReadingID" ColumnName="ReadingID" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+                <ScalarProperty Name="UnitsConsumed" ColumnName="UnitsConsumed" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="UMS_DBModel.Complaint">
+              <MappingFragment StoreEntitySet="Complaints">
+                <ScalarProperty Name="ComplaintID" ColumnName="ComplaintID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ResolvedDate" ColumnName="ResolvedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="UMS_DBModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+                <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meters">
+            <EntityTypeMapping TypeName="UMS_DBModel.Meter">
+              <MappingFragment StoreEntitySet="Meters">
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="UtilityID" ColumnName="UtilityID" />
+                <ScalarProperty Name="MeterSerialNumber" ColumnName="MeterSerialNumber" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="UMS_DBModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="BillID" ColumnName="BillID" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Premises">
+            <EntityTypeMapping TypeName="UMS_DBModel.Premis">
+              <MappingFragment StoreEntitySet="Premises">
+                <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Readings">
+            <EntityTypeMapping TypeName="UMS_DBModel.Reading">
+              <MappingFragment StoreEntitySet="Readings">
+                <ScalarProperty Name="ReadingID" ColumnName="ReadingID" />
+                <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+                <ScalarProperty Name="ReadingDate" ColumnName="ReadingDate" />
+                <ScalarProperty Name="PreviousReading" ColumnName="PreviousReading" />
+                <ScalarProperty Name="CurrentReading" ColumnName="CurrentReading" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tariffs">
+            <EntityTypeMapping TypeName="UMS_DBModel.Tariff">
+              <MappingFragment StoreEntitySet="Tariffs">
+                <ScalarProperty Name="TariffID" ColumnName="TariffID" />
+                <ScalarProperty Name="UtilityID" ColumnName="UtilityID" />
+                <ScalarProperty Name="TariffName" ColumnName="TariffName" />
+                <ScalarProperty Name="UnitRate" ColumnName="UnitRate" />
+                <ScalarProperty Name="FixedCharge" ColumnName="FixedCharge" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TariffSlabs">
+            <EntityTypeMapping TypeName="UMS_DBModel.TariffSlab">
+              <MappingFragment StoreEntitySet="TariffSlabs">
+                <ScalarProperty Name="SlabID" ColumnName="SlabID" />
+                <ScalarProperty Name="TariffID" ColumnName="TariffID" />
+                <ScalarProperty Name="FromUnit" ColumnName="FromUnit" />
+                <ScalarProperty Name="ToUnit" ColumnName="ToUnit" />
+                <ScalarProperty Name="RatePerUnit" ColumnName="RatePerUnit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="UMS_DBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UtilityTypes">
+            <EntityTypeMapping TypeName="UMS_DBModel.UtilityType">
+              <MappingFragment StoreEntitySet="UtilityTypes">
+                <ScalarProperty Name="UtilityID" ColumnName="UtilityID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_MonthlyRevenue">
+            <EntityTypeMapping TypeName="UMS_DBModel.v_MonthlyRevenue">
+              <MappingFragment StoreEntitySet="v_MonthlyRevenue">
+                <ScalarProperty Name="UtilityType" ColumnName="UtilityType" />
+                <ScalarProperty Name="BillYear" ColumnName="BillYear" />
+                <ScalarProperty Name="BillMonth" ColumnName="BillMonth" />
+                <ScalarProperty Name="TotalRevenue" ColumnName="TotalRevenue" />
+                <ScalarProperty Name="TotalBillsGenerated" ColumnName="TotalBillsGenerated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_TopConsumers">
+            <EntityTypeMapping TypeName="UMS_DBModel.v_TopConsumers">
+              <MappingFragment StoreEntitySet="v_TopConsumers">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Utility" ColumnName="Utility" />
+                <ScalarProperty Name="TotalUsage" ColumnName="TotalUsage" />
+                <ScalarProperty Name="TotalSpent" ColumnName="TotalSpent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_UnpaidBillsReport">
+            <EntityTypeMapping TypeName="UMS_DBModel.v_UnpaidBillsReport">
+              <MappingFragment StoreEntitySet="v_UnpaidBillsReport">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Utility" ColumnName="Utility" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegisterNewCustomer" FunctionName="UMS_DBModel.Store.sp_RegisterNewCustomer" />
+          <FunctionImportMapping FunctionImportName="sp_SubmitReadingAndGenerateBill" FunctionName="UMS_DBModel.Store.sp_SubmitReadingAndGenerateBill" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

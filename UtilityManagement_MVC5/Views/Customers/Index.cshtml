@@ -1,0 +1,47 @@
+﻿@model IEnumerable<UtilityManagement_MVC5.Models.Customer>
+@{ ViewBag.Title = "Customer Management"; }
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">👥 Customer Management</h2>
+        <a href="@Url.Action("Create", "Customers")" class="btn btn-success rounded-pill px-4 fw-bold">+ Add Customer</a>
+    </div>
+
+    <div class="card shadow border-0 overflow-hidden" style="border-radius: 15px;">
+        <table class="table table-hover mb-0">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th class="py-3 ps-4">ID</th>
+                    <th class="py-3">Name</th>
+                    <th class="py-3">Email</th>
+                    <th class="py-3">Phone</th>
+                    <th class="py-3">Address</th>
+                    <th class="py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td class="ps-4 fw-bold">@customer.CustomerID</td>
+                        <td>@customer.FullName</td>
+                        <td>@customer.Email</td>
+                        <td>@customer.PhoneNumber</td>
+                        <td>@customer.AddressLine</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Edit", "Customers", new { id = customer.CustomerID })"
+                               class="btn btn-sm btn-outline-primary rounded-pill px-3">Edit</a>
+
+                            <a href="@Url.Action("Delete", "Customers", new { id = customer.CustomerID })"
+                               class="btn btn-sm btn-outline-danger rounded-pill px-3">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        <a href="@Url.Action("Index", "Home")" class="text-muted text-decoration-none">← Back to Dashboard</a>
+    </div>
+</div>

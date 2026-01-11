@@ -1,0 +1,51 @@
+﻿@model IEnumerable<UtilityManagement_MVC5.Models.Reading>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReadingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreviousReading)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentReading)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Meter.MeterSerialNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReadingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PreviousReading)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentReading)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Meter.MeterSerialNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReadingID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReadingID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReadingID })
+        </td>
+    </tr>
+}
+
+</table>
